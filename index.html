@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>Freedom for Palestine - Boikot Pro israel</title>
+    <meta name="title" content="Freedom for Palestine - Boikot Pro israel" />
+    <meta
+      name="description"
+      content="Aksi Tegas: Boikot produk yang merugikan kemerdekaan Palestina. Bergabunglah dalam gerakan global untuk menegakkan keadilan dan perdamaian di wilayah yang dilanda konflik. Informasi lengkap ada di sini."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nurfachmi.com/boikot-pro-israel" />
+    <meta
+      property="og:title"
+      content="Freedom for Palestine - Boikot Pro israel"
+    />
+    <meta
+      property="og:description"
+      content="Aksi Tegas: Boikot produk yang merugikan kemerdekaan Palestina. Bergabunglah dalam gerakan global untuk menegakkan keadilan dan perdamaian di wilayah yang dilanda konflik. Informasi lengkap ada di sini."
+    />
+    <meta
+      property="og:image"
+      content="https://nurfachmi.com/boikot-pro-israel/palestine.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://nurfachmi.com/boikot-pro-israel"
+    />
+    <meta
+      property="twitter:title"
+      content="Freedom for Palestine - Boikot Pro israel"
+    />
+    <meta
+      property="twitter:description"
+      content="Aksi Tegas: Boikot produk yang merugikan kemerdekaan Palestina. Bergabunglah dalam gerakan global untuk menegakkan keadilan dan perdamaian di wilayah yang dilanda konflik. Informasi lengkap ada di sini."
+    />
+    <meta
+      property="twitter:image"
+      content="https://nurfachmi.com/boikot-pro-israel/palestine.png"
+    />
+
+    <title>Freedom for Palestine - Boikot Pro israel</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
+    />
+    <style>
+      
+    </style>
+  </head>
+  <body>
+    <form class="row domain-search bg-pblue">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <h2 class="form-title">Cari Produk Yang Diboikot</h2>
+          </div>
+          <div class="col-md-9">
+            <input type="search" id="search" class="form-control" placeholder="Tulis merknya di sini" />
+            <p>Hindari untuk membeli jika muncul pada kolom pencarian.</p>
+          </div>
+        </div>
+      </div>
+    </form>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+      $(function () {
+        $.widget("custom.catcomplete", $.ui.autocomplete, {
+          _create: function () {
+            this._super();
+            this.widget().menu(
+              "option",
+              "items",
+              "> :not(.ui-autocomplete-category)"
+            );
+          },
+          _renderMenu: function (ul, items) {
+            var that = this,
+              currentCategory = "";
+            $.each(items, function (index, item) {
+              var li;
+              if (item.category != currentCategory) {
+                ul.append(
+                  "<li class='ui-autocomplete-category'>" +
+                    item.category +
+                    "</li>"
+                );
+                currentCategory = item.category;
+              }
+              li = that._renderItemData(ul, item);
+              if (item.category) {
+                li.attr("aria-label", item.category + " : " + item.label);
+              }
+            });
+          },
+        });
+        $.ajax({
+          url: "boycott.json", // source: https://www.akurat.co/infografis/1303228099/boikot-pro-israel
+          dataType: "json",
+          success: function (data) {
+            $("#search").catcomplete({
+              delay: 0,
+              source: data,
+            });
+          },
+        });
+      });
+    </script>
+    <!-- 
+      template source: https://bbbootstrap.com/snippets/search-box-for-domain-names-11296350
+    -->
+  </body>
+</html>
