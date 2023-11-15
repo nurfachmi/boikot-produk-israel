@@ -52,6 +52,7 @@
   { "label": "Nescafe", "category": "Minuman" },
   { "label": "Starbucks", "category": "Minuman" },
   { "label": "2 Tang", "category": "Minuman" },
+  { "label": "SodaStream", "category": "Minuman" },
 
   { "label": "Royco", "category": "Penyedap Rasa" },
   { "label": "Knoor", "category": "Penyedap Rasa" },
@@ -68,6 +69,7 @@
   { "label": "Maybeline", "category": "Kecantikan" },
   { "label": "Estelauder", "category": "Kecantikan" },
   { "label": "Revlon", "category": "Kecantikan" },
+  { "label": "Ahava", "category": "Kecantikan" },
 
   { "label": "Sariwangi", "category": "Teh Kemasan" },
   { "label": "Lipton", "category": "Teh Kemasan" },
@@ -112,6 +114,10 @@
   { "label": "Motorola", "category": "Brand" },
   { "label": "Ford", "category": "Brand" },
   { "label": "Chevrolet", "category": "Brand" },
+  { "label": "Siemens", "category": "Brand" },
+  { "label": "Hewlett Packard (HP)", "category": "Brand" },
+
+  { "label": "AXA", "category": "Asuransi" },
 
   { "label": "Rexona", "category": "Deodoran" },
   { "label": "Dove", "category": "Deodoran" },
