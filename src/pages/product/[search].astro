@@ -46,7 +46,7 @@ const isAjaxRequest = Astro.request.headers.get('hx-request');
 
               {relatedItems.filter((_, index) => index < 4).map(relatedItem => (
               <>
-                <Card key={relatedItem} name={relatedItem} /></>
+                <Card name={relatedItem} /></>
               ))}</ul>
             </div>
         </>) : 
@@ -73,7 +73,7 @@ const isAjaxRequest = Astro.request.headers.get('hx-request');
 
               {relatedItems.filter((_, index) => index < 4).map(relatedItem => (
               <>
-                <Card key={relatedItem} name={relatedItem} /></>
+                <Card name={relatedItem} /></>
               ))}</ul>
             </div>
         </>) : 
