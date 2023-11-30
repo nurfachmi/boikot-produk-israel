@@ -19,7 +19,7 @@
           id="search-input"
           placeholder="Tanya Produkmu disini..."
           class="w-full px-4 py-2 border rounded-md"
-          hx-get="/product/searchResult"
+          hx-get=`${Astro.url.origin}/product/searchResult`
           hx-trigger="keyup delayed:800ms"
           hx-target="#search-result"
           hx-indicator="#search-indicator"
