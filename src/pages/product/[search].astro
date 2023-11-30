@@ -14,7 +14,7 @@ for (const [category, items] of Object.entries(raw_data)) {
 const fuseOptions = {
   includeScore: true,
   keys: ['name'],
-  threshold: 0.2, 
+
 };
 
 const fuse = new Fuse(data, fuseOptions);
