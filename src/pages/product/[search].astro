@@ -1,0 +1,87 @@
+---
+import Fuse from 'fuse.js';
+
+import raw_data from '../../db/boycott.json';
+
+const data = [];
+for (const [category, items] of Object.entries(raw_data)) {
+  for (const name of items) {
+    data.push({ name, category }); 
+  }
+}
+
+// Opsi untuk Fuse.js
+const fuseOptions = {
+  includeScore: true,
+  keys: ['name'],
+  threshold: 0.2, 
+};
+
+const fuse = new Fuse(data, fuseOptions);
+const url = new URL(Astro.request.url);
+const query = url.searchParams.get('search')?.trim(); 
+
+const searchResults = query ? fuse.search(query) : [];
+const matchedCategory = searchResults.length > 0 ? searchResults[0].item.category : null;
+const relatedItems = matchedCategory ? data.filter(item => item.category === matchedCategory).map(item => item.name) : [];
+
+import Card from '@components/Card.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+const isAjaxRequest = Astro.request.headers.get('hx-request');
+
+---
+{isAjaxRequest ? (
+ <div id="digunakan">
+    {searchResults.length > 0 ? 
+        (<>
+            <div class="p-3 bg-red-200 font-bold text-red-800 rounded">Hindari untuk membeli "{searchResults[0].item.name}" jika muncul pada kolom pencarian.</div>
+            <Card {...searchResults[0].item} />
+            <div class="mt-4">
+                <header>
+        <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">
+            Item terkait dalam kategori <a href=`/getProducts?category=${matchedCategory}`>{matchedCategory}</a>:
+        </h2>
+      </header>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+              {relatedItems.filter((_, index) => index < 4).map(relatedItem => (
+              <>
+                <Card key={relatedItem} name={relatedItem} /></>
+              ))}</ul>
+            </div>
+        </>) : 
+        query ?
+            <div class="p-3 bg-red-200 text-red-800 rounded">Tidak ditemukan hasil untuk "{query}".</div>
+        : <div>Masukkan kata kunci pencarian.</div>
+    }
+</div>
+) : (<>
+<BaseLayout>
+
+  <div id="search-result" class="container  mx-auto text-center p-5 rounded-md bg-gradient-to-tr from-gray-100/50 to-gray-200/50 mt-4 text-gray-700/50 backdrop-blur">
+    {searchResults.length > 0 ? 
+        (<>
+            <div class="p-3 bg-red-200 font-bold text-red-800 rounded">Hindari untuk membeli "{searchResults[0].item.name}" jika muncul pada kolom pencarian.</div>
+            <Card {...searchResults[0].item} />
+            <div class="mt-4">
+                <header>
+        <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">
+          Item terkait dalam kategori <a href=`${Astro.url.origin}/getProducts?category=${matchedCategory}`>{matchedCategory}</a>:
+        </h2>
+      </header>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+              {relatedItems.filter((_, index) => index < 4).map(relatedItem => (
+              <>
+                <Card key={relatedItem} name={relatedItem} /></>
+              ))}</ul>
+            </div>
+        </>) : 
+        query ?
+            <div class="p-3 bg-red-200 text-red-800 rounded">Tidak ditemukan hasil untuk "{query}".</div>
+        : <div>Masukkan kata kunci pencarian.</div>
+    }
+</div>
+
+</div></BaseLayout> </>
+)}

@@ -1,0 +1,17 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Cate from '@components/Category.astro';
+import raw_data from '../db/boycott.json';
+const categories = Object.keys(raw_data);
+
+---
+<BaseLayout>
+    
+    <div id="search-result" class="container  mx-auto text-center p-5 rounded-md bg-gradient-to-tr from-gray-100/50 to-gray-200/50 mt-4 text-gray-700/50 backdrop-blur">Hindari untuk membeli jika muncul pada kolom pencarian.</div>
+<Cate kategori={categories}/>
+<div
+    id="products"
+    class="flex mt-5 rounded-md items-center justify-center bg-white/50 backdrop-blur mx-auto w-fit [&>div]:w-full"
+>
+</div>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+
+---
+
+<div class="container mx-auto pt-25 px-4 py-8">
+  <h1
+  class="text-center text-2xl md:text-4xl text-transparent font-extrabold bg-clip-text bg-gradient-to-br from-red-600 from-20% via-primary via-30% to-green-600"
+>
+  Cari Produk Yang Diboikot
+</h1>
+  <div class="max-w-lg mx-auto">
+  
+    <div class="bg-white rounded-lg p-6 shadow-lg">
+      <div class="flex items-center space-x-4">
+        <div class="i-tabler-search h-5 w-5"></div>
+        <input
+          type="text"
+          name="search"
+          id="search-input"
+          placeholder="Tanya Produkmu disini..."
+          class="w-full px-4 py-2 border rounded-md"
+          hx-get="/product/searchResult"
+          hx-trigger="keyup delayed:800ms"
+          hx-target="#search-result"
+          hx-indicator="#search-indicator"
+          hx-push-url="true"
+        />
+      </div>
+      <div id="search-indicator" class="hidden">Loading...</div>
+    </div>
+  </div>
+</div>

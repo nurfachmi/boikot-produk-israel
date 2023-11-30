@@ -1,0 +1,28 @@
+---
+interface Props {
+    kategori: object;
+}
+const { kategori } = Astro.props;
+---
+
+<div
+    class="flex mt-5 rounded-md items-center justify-center bg-white/50 backdrop-blur mx-auto w-fit [&>div]:w-full"
+>
+    <div class="rounded-xl p-5 border bg-card text-card-foreground shadow">
+        <nav class="flex flex-wrap gap-6" aria-label="Tabs">
+            {
+                kategori.map((category) => (
+                    <a
+                        href={`${Astro.url.origin}/getProducts?category=${category}`}
+                        class="shrink-0 rounded-lg bg-sky-100 p-2 text-sm font-medium text-sky-600"
+                        aria-current="page"
+                        hx-get={`${Astro.url.origin}/getProducts?category=${category}`}
+                        hx-target="#products"
+                    >
+                        {category}
+                    </a>
+                ))
+            }
+        </nav>
+    </div>
+</div>
