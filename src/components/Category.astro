@@ -3,26 +3,87 @@ interface Props {
     kategori: object;
 }
 const { kategori } = Astro.props;
+
+// Map categories to icons
+const categoryIcons = {
+  "Fast Food": "i-tabler-burger",
+  "Sabun, Sampo, Deterjen, dan Pasta": "i-tabler-spray",
+  "Snack": "i-tabler-cookie",
+  "Minuman": "i-tabler-cup",
+  "Penyedap Rasa": "i-tabler-salt",
+  "Kecantikan": "i-tabler-sparkles",
+  "Teh Kemasan": "i-tabler-coffee",
+  "Pengharum": "i-tabler-flower",
+  "Susu dan Sereal": "i-tabler-milk",
+  "Pakaian dan Sepatu": "i-tabler-shirt",
+  "Brand": "i-tabler-building-store",
+  "Asuransi": "i-tabler-shield",
+  "Deodoran": "i-tabler-perfume",
+  "Popok dan Pembalut": "i-tabler-baby-carriage",
+  "Kesehatan": "i-tabler-medical-cross",
+  "Mall/Supermarket": "i-tabler-shopping-cart",
+  "Saus dan Kecap": "i-tabler-bottle",
+  "Tontonan": "i-tabler-device-tv",
+};
 ---
 
-<div
-    class="flex mt-5 rounded-md items-center justify-center bg-white/50 backdrop-blur mx-auto w-fit [&>div]:w-full"
->
-    <div class="rounded-xl p-5 border bg-card text-card-foreground shadow">
-        <nav class="flex flex-wrap gap-6" aria-label="Tabs">
-            {
-                kategori.map((category) => (
-                    <a
-                        href={`${Astro.url.origin}/getProducts?category=${category}`}
-                        class="shrink-0 rounded-lg bg-sky-100 p-2 text-sm font-medium text-sky-600"
-                        aria-current="page"
-                        hx-get={`${Astro.url.origin}/getProducts?category=${category}`}
-                        hx-target="#products"
-                    >
-                        {category}
-                    </a>
-                ))
-            }
-        </nav>
+<div class="container mx-auto px-4 mt-8 mb-6">
+  <div class="text-center mb-6">
+    <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+      Jelajahi Berdasarkan Kategori
+    </h2>
+    <p class="text-sm text-gray-600">
+      Pilih kategori untuk melihat daftar produk yang diboikot
+    </p>
+  </div>
+
+  <div class="bg-white rounded-2xl p-6 shadow-xl border border-gray-200/50 backdrop-blur-sm">
+    <nav
+      class="flex flex-wrap gap-3 justify-center items-center"
+      aria-label="Product Categories"
+    >
+      {
+        kategori.map((category) => {
+          const icon = categoryIcons[category] || "i-tabler-tag";
+          return (
+            <a
+              href={`${Astro.url.origin}/getProducts?category=${category}`}
+              class="group inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 hover:from-red-50 hover:to-red-100 border border-gray-200 hover:border-red-300 text-sm font-medium text-gray-700 hover:text-red-700 transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95"
+              hx-get={`${Astro.url.origin}/getProducts?category=${category}`}
+              hx-target="#products"
+              hx-indicator="#category-loading"
+            >
+              <div class={`${icon} h-4 w-4 transition-transform duration-200 group-hover:scale-110`}></div>
+              <span>{category}</span>
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <!-- Loading Indicator for Category Selection -->
+    <div id="category-loading" class="htmx-indicator mt-4 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-blue-600 text-sm font-medium">
+        <div class="i-tabler-loader-2 h-4 w-4 animate-spin"></div>
+        <span>Memuat produk...</span>
+      </div>
     </div>
+  </div>
+
+  <!-- Stats/Info Bar -->
+  <div class="mt-4 text-center">
+    <p class="text-xs text-gray-500">
+      <span class="font-semibold text-red-600">{kategori.length}</span> kategori tersedia
+    </p>
+  </div>
 </div>
+
+<style>
+  .htmx-indicator {
+    display: none;
+  }
+
+  .htmx-request .htmx-indicator {
+    display: inline-flex;
+  }
+</style>

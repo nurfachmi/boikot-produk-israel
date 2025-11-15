@@ -4,14 +4,100 @@ import Cate from '@components/Category.astro';
 import raw_data from '../db/boycott.json';
 const categories = Object.keys(raw_data);
 
+// Count total products
+let totalProducts = 0;
+for (const category in raw_data) {
+  totalProducts += raw_data[category].length;
+}
 ---
 <BaseLayout>
-    
-    <div id="search-result" class="container  mx-auto text-center p-5 rounded-md bg-gradient-to-tr from-gray-100/50 to-gray-200/50 mt-4 text-gray-700/50 backdrop-blur">Hindari untuk membeli jika muncul pada kolom pencarian.</div>
-<Cate kategori={categories}/>
-<div
-    id="products"
-    class="flex mt-5 rounded-md items-center justify-center bg-white/50 backdrop-blur mx-auto w-fit [&>div]:w-full"
->
-</div>
+    <!-- Search Result Container -->
+    <div
+      id="search-result"
+      class="container mx-auto max-w-4xl px-4 mt-6"
+    >
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-l-4 border-orange-400 rounded-xl p-6 shadow-lg backdrop-blur-sm">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-0.5">
+            <div class="i-tabler-alert-circle h-6 w-6 text-orange-600"></div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-base font-semibold text-gray-900 mb-1">
+              Informasi Pencarian
+            </h3>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              Hindari untuk membeli jika produk muncul pada kolom pencarian.
+              Gunakan pencarian di atas atau pilih kategori di bawah untuk melihat daftar produk.
+            </p>
+            <div class="mt-3 flex items-center gap-2 text-xs text-gray-600">
+              <div class="i-tabler-database h-4 w-4"></div>
+              <span><strong>{totalProducts}</strong> produk dalam <strong>{categories.length}</strong> kategori</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filter -->
+    <Cate kategori={categories}/>
+
+    <!-- Products Grid Container -->
+    <div class="container mx-auto px-4 mt-8 mb-12">
+      <div
+        id="products"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[200px]"
+      >
+        <!-- Products will be loaded here via HTMX -->
+        <div class="col-span-full flex flex-col items-center justify-center py-16 text-center">
+          <div class="i-tabler-package h-16 w-16 text-gray-300 mb-4"></div>
+          <h3 class="text-lg font-semibold text-gray-700 mb-2">
+            Pilih Kategori untuk Melihat Produk
+          </h3>
+          <p class="text-sm text-gray-500 max-w-md">
+            Klik salah satu kategori di atas atau gunakan fitur pencarian untuk menemukan produk yang Anda cari.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Info -->
+    <div class="container mx-auto px-4 pb-8">
+      <div class="bg-gradient-to-br from-red-50 to-green-50 rounded-2xl p-8 shadow-lg border border-gray-200/50">
+        <div class="text-center max-w-3xl mx-auto">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 text-gray-700 text-sm font-medium mb-4">
+            <div class="i-tabler-heart-handshake h-5 w-5 text-red-600"></div>
+            <span>Bersama untuk Keadilan</span>
+          </div>
+
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+            Mengapa Memboikot?
+          </h2>
+
+          <p class="text-gray-700 leading-relaxed mb-4">
+            Boikot adalah bentuk perlawanan damai yang efektif. Dengan tidak membeli produk-produk tertentu,
+            kita bersama-sama menyuarakan dukungan untuk keadilan dan perdamaian di Palestina.
+          </p>
+
+          <div class="grid md:grid-cols-3 gap-4 mt-6">
+            <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+              <div class="i-tabler-users h-8 w-8 text-red-600 mx-auto mb-2"></div>
+              <p class="text-sm font-medium text-gray-900">Gerakan Global</p>
+              <p class="text-xs text-gray-600 mt-1">Jutaan orang di seluruh dunia</p>
+            </div>
+
+            <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+              <div class="i-tabler-peace h-8 w-8 text-green-600 mx-auto mb-2"></div>
+              <p class="text-sm font-medium text-gray-900">Perlawanan Damai</p>
+              <p class="text-xs text-gray-600 mt-1">Tanpa kekerasan, penuh makna</p>
+            </div>
+
+            <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+              <div class="i-tabler-target h-8 w-8 text-blue-600 mx-auto mb-2"></div>
+              <p class="text-sm font-medium text-gray-900">Dampak Nyata</p>
+              <p class="text-xs text-gray-600 mt-1">Suara kita membuat perbedaan</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </BaseLayout>
