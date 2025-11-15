@@ -2,31 +2,105 @@
 
 ---
 
-<div class="container mx-auto pt-25 px-4 py-8">
-  <h1
-  class="text-center text-2xl md:text-4xl text-transparent font-extrabold bg-clip-text bg-gradient-to-br from-red-600 from-20% via-primary via-30% to-green-600"
->
-  Cari Produk Yang Diboikot
-</h1>
-  <div class="max-w-lg mx-auto">
-  
-    <div class="bg-white rounded-lg p-6 shadow-lg">
-      <div class="flex items-center space-x-4">
-        <div class="i-tabler-search h-5 w-5"></div>
+<div class="container mx-auto pt-8 md:pt-12 px-4 py-8">
+  <!-- Hero Section -->
+  <div class="text-center mb-8">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 text-red-600 text-sm font-medium mb-4">
+      <div class="i-tabler-flag-filled h-4 w-4"></div>
+      <span>Freedom for Palestine</span>
+    </div>
+
+    <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+      <span class="text-transparent bg-clip-text bg-gradient-to-br from-red-600 via-red-700 to-green-600">
+        Cari Produk Yang Diboikot
+      </span>
+    </h1>
+
+    <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
+      Periksa produk yang mendukung pendudukan. Bersama kita tegakkan keadilan.
+    </p>
+  </div>
+
+  <!-- Search Box -->
+  <div class="max-w-2xl mx-auto">
+    <div class="relative bg-white rounded-2xl p-4 md:p-6 shadow-2xl border border-gray-200/50 backdrop-blur-sm transition-all duration-300 hover:shadow-3xl">
+      <div class="relative flex items-center gap-4">
+        <!-- Search Icon -->
+        <div class="flex-shrink-0">
+          <div class="i-tabler-search h-6 w-6 md:h-7 md:w-7 text-gray-400"></div>
+        </div>
+
+        <!-- Input Field -->
         <input
           type="text"
           name="search"
           id="search-input"
-          placeholder="Tanya Produkmu disini..."
-          class="w-full px-4 py-2 border rounded-md"
+          placeholder="Ketik nama produk atau brand..."
+          class="flex-1 text-base md:text-lg px-2 py-3 bg-transparent border-none outline-none text-gray-900 placeholder-gray-400 focus:ring-0"
           hx-get=`${Astro.url.origin}/product/searchResult`
-          hx-trigger="keyup delayed:800ms"
+          hx-trigger="keyup changed delay:500ms"
           hx-target="#search-result"
           hx-indicator="#search-indicator"
           hx-push-url="true"
         />
+
+        <!-- Loading Indicator -->
+        <div id="search-indicator" class="htmx-indicator flex-shrink-0">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-blue-600 text-sm font-medium">
+            <div class="i-tabler-loader-2 h-4 w-4 animate-spin"></div>
+            <span class="hidden sm:inline">Mencari...</span>
+          </div>
+        </div>
       </div>
-      <div id="search-indicator" class="hidden">Loading...</div>
+
+      <!-- Search Tips -->
+      <div class="mt-4 pt-4 border-t border-gray-100">
+        <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+          <div class="i-tabler-info-circle h-4 w-4"></div>
+          <span class="font-medium">Tips:</span>
+          <span>Coba ketik "McDonald", "Coca Cola", atau "Nestle"</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Category Tags -->
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+      <span class="text-xs text-gray-500 font-medium">Pencarian populer:</span>
+      <button
+        type="button"
+        class="px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-medium text-gray-700 transition-colors duration-200"
+        onclick="document.getElementById('search-input').value='McDonalds';document.getElementById('search-input').dispatchEvent(new Event('keyup'));"
+      >
+        McDonalds
+      </button>
+      <button
+        type="button"
+        class="px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-medium text-gray-700 transition-colors duration-200"
+        onclick="document.getElementById('search-input').value='Coca Cola';document.getElementById('search-input').dispatchEvent(new Event('keyup'));"
+      >
+        Coca Cola
+      </button>
+      <button
+        type="button"
+        class="px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-medium text-gray-700 transition-colors duration-200"
+        onclick="document.getElementById('search-input').value='Starbucks';document.getElementById('search-input').dispatchEvent(new Event('keyup'));"
+      >
+        Starbucks
+      </button>
     </div>
   </div>
 </div>
+
+<style>
+  .htmx-indicator {
+    display: none;
+  }
+
+  .htmx-request .htmx-indicator {
+    display: inline-flex;
+  }
+
+  .htmx-request #search-input {
+    opacity: 0.7;
+  }
+</style>
