@@ -1,0 +1,34 @@
+{
+  "name": "b",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.3.1",
+    "@astrojs/vercel": "^5.2.0",
+    "@types/alpinejs": "^3.13.5",
+    "@unocss/astro": "^0.57.7",
+    "@unocss/reset": "^0.57.2",
+    "alpinejs": "^3.13.3",
+    "astro": "^3.5.3",
+    "fuse.js": "^7.0.0",
+    "sharp": "^0.33.0",
+    "typescript": "^5.3.2",
+    "unocss": "^0.57.7"
+  },
+  "devDependencies": {
+    "@iconify-json/fluent-emoji": "^1.1.15",
+    "@iconify-json/tabler": "^1.1.95",
+    "@unocss/preset-icons": "^0.56.5",
+    "@unocss/preset-web-fonts": "^0.56.5",
+    "@unocss/transformer-compile-class": "^0.57.2",
+    "@unocss/transformer-directives": "^0.57.2",
+    "unocss": "^0.56.5"
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "Fast Food": [
+    "McDonalds",
+    "Kentucky Fried Chicken",
+    "Pizza Hut",
+    "Burger King",
+    "Starbucks",
+    "Subway",
+    "Domino's Pizza",
+    "Papa John's"
+  ],
+  "Sabun, Sampo, Deterjen, dan Pasta": [
+    "Rinso",
+    "Molto",
+    "Pepsodent",
+    "Close Up",
+    "Sensodyne",
+    "Oral-B",
+    "Pantene",
+    "Sunsilk",
+    "Lifebuoy",
+    "Lux",
+    "Vanish",
+    "Johnsons",
+    "Cif",
+    "Fairy",
+    "Colgate",
+    "Listerine",
+    "Head & Shoulder"
+  ],
+  "Snack": [
+    "KitKat",
+    "Magnum",
+    "Oreo",
+    "Danone",
+    "Lays",
+    "Kraft",
+    "Pringles",
+    "Biskuat",
+    "Twix",
+    "Mars",
+    "Doritos",
+    "Cheetos",
+    "Milo",
+    "M&Ms",
+    "Cornflakes"
+  ],
+  "Minuman": [
+    "Aqua",
+    "Vit",
+    "Coca Cola",
+    "Pepsi",
+    "Fanta",
+    "Sprite",
+    "Nestle",
+    "Nescafe",
+    "Starbucks",
+    "2 Tang",
+    "SodaStream"
+  ],
+  "Penyedap Rasa": [
+    "Royco",
+    "Knoor",
+    "Maggi"
+  ],
+  "Kecantikan": [
+    "Garnier",
+    "Loreal",
+    "Nivea",
+    "Ponds",
+    "Vaseline",
+    "The Body Shop",
+    "Victorias Secret",
+    "Clean & Clear",
+    "Maybeline",
+    "Estelauder",
+    "Revlon",
+    "Ahava",
+    "Bath & Body Works"
+  ],
+  "Teh Kemasan": [
+    "Sariwangi",
+    "Lipton",
+    "Nestea"
+  ],
+  "Pengharum": [
+    "Glade"
+  ],
+  "Susu dan Sereal": [
+    "Dancow",
+    "Koko Crunch",
+    "Nestle",
+    "Nesquick",
+    "Kraft",
+    "Kellog's"
+  ],
+  "Pakaian dan Sepatu": [
+    "Zara",
+    "Puma",
+    "Nike",
+    "Adidas",
+    "Calvin Klein",
+    "Levis",
+    "Chanel",
+    "Gucci",
+    "H&M",
+    "GAP",
+    "Marks & Spencer",
+    "Monster",
+    "Boss",
+    "Hugo",
+    "Timberland",
+    "Giorgio Armani",
+    "AIA",
+    "II",
+    "Converse All Star",
+    "DKNY",
+    "Lancome",
+    "Tommy Hilfiger",
+    "Champion",
+    "Reebok"
+  ],
+  "Brand": [
+    "Danone",
+    "Unilever",
+    "Nokia",
+    "Motorola",
+    "Ford",
+    "Chevrolet",
+    "Siemens",
+    "Hewlett Packard (HP)"
+  ],
+  "Asuransi": [
+    "AXA"
+  ],
+  "Deodoran": [
+    "Rexona",
+    "Dove"
+  ],
+  "Popok dan Pembalut": [
+    "Pampers",
+    "Kotex"
+  ],
+  "Kesehatan": [
+    "Vicks",
+    "Scott"
+  ],
+  "Mall/Supermarket": [
+    "Carrefour",
+    "7-Eleven"
+  ],
+  "Saus dan Kecap": [
+    "Heinz",
+    "Bango",
+    "ABC"
+  ],
+  "Tontonan": [
+    "Disney",
+    "National Geographic",
+    "Fox",
+    "CNN"
+  ]
+}

@@ -1,0 +1,107 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import Search from "@components/Search.astro";
+---
+
+<html  lang="id">
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow" />
+
+    <script
+      src="https://unpkg.com/htmx.org@1.9.6"
+      integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+      crossorigin="anonymous"></script>
+    <title>Freedom for Palestine - Boikot produk pendukung israel</title>
+    <meta
+      name="title"
+      content="Freedom for Palestine - Boikot produk pendukung israel"
+    />
+    <meta
+      name="description"
+      content="Aksi Tegas: Boikot produk yang merugikan kemerdekaan Palestina. Bergabunglah dalam gerakan global untuk menegakkan keadilan dan perdamaian di wilayah yang dilanda konflik. Informasi lengkap ada di sini."
+    />
+    <link rel="icon" type="image/svg+xml" href="../favicon.ico" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nurfachmi.com/boikot-pro-israel" />
+    <meta
+      property="og:title"
+      content="Freedom for Palestine - Boikot produk pendukung israel"
+    />
+    <meta
+      property="og:description"
+      content="Aksi Tegas: Boikot produk yang merugikan kemerdekaan Palestina. Bergabunglah dalam gerakan global untuk menegakkan keadilan dan perdamaian di wilayah yang dilanda konflik. Informasi lengkap ada di sini."
+    />
+    <meta
+      property="og:image"
+      content="https://nurfachmi.com/boikot-pro-israel/palestine.png"
+    />
+    <ViewTransitions />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://nurfachmi.com/boikot-pro-israel"
+    />
+    <meta
+      property="twitter:title"
+      content="Freedom for Palestine - Boikot produk pendukung israel"
+    />
+    <meta
+      property="twitter:description"
+      content="Aksi Tegas: Boikot produk yang merugikan kemerdekaan Palestina. Bergabunglah dalam gerakan global untuk menegakkan keadilan dan perdamaian di wilayah yang dilanda konflik. Informasi lengkap ada di sini."
+    />
+    <meta
+      property="twitter:image"
+      content="https://nurfachmi.com/boikot-pro-israel/palestine.png"
+    />
+  </head>
+  <body class="font-sans box-content m-0 p-0 bg-cover bg-white">
+    <main class="px-12">
+      <Search />
+
+      <slot />
+    </main>
+
+    <style is:global>
+      .stamp {
+        transform: rotate(12deg);
+        color: #555;
+        font-size: 3rem;
+        font-weight: 700;
+        border: 0.25rem solid #555;
+        display: inline-block;
+        padding: 0.25rem 1rem;
+        text-transform: uppercase;
+        border-radius: 1rem;
+        font-family: "Courier Prime", monospace;
+        mix-blend-mode: multiply;
+      }
+
+      .is-nope {
+        color: #d23;
+        border: 0.5rem double #d23;
+        transform: rotate(3deg);
+        font-size: 3rem;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 640px) {
+        .stamp {
+          font-size: 2rem;
+          padding: 0.25rem 0.5rem;
+        }
+      }
+
+      .mask-image {
+        -webkit-mask-image: url("../grunge.webp");
+        mask-image: url("../grunge.webp");
+        -webkit-mask-size: 944px 604px;
+        mask-size: 944px 604px;
+      }
+    </style>
+  </body>
+</html>

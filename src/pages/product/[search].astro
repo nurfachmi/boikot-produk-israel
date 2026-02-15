@@ -1,0 +1,220 @@
+---
+import Fuse from 'fuse.js';
+
+import raw_data from '../../db/boycott.json';
+
+const data = [];
+for (const [category, items] of Object.entries(raw_data)) {
+  for (const name of items) {
+    data.push({ name, category }); 
+  }
+}
+
+// Opsi untuk Fuse.js
+const fuseOptions = {
+  includeScore: true,
+  keys: ['name'],
+
+};
+
+const fuse = new Fuse(data, fuseOptions);
+const url = new URL(Astro.request.url);
+const query = url.searchParams.get('search')?.trim(); 
+
+const searchResults = query ? fuse.search(query) : [];
+const matchedCategory = searchResults.length > 0 ? searchResults[0].item.category : null;
+const relatedItems = matchedCategory ? data.filter(item => item.category === matchedCategory).map(item => item.name) : [];
+
+import Card from '@components/Card.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+const isAjaxRequest = Astro.request.headers.get('hx-request');
+
+---
+{isAjaxRequest ? (
+ <div id="search-result" class="container mx-auto max-w-6xl px-4">
+    {searchResults.length > 0 ?
+        (<>
+            {/* Warning Alert */}
+            <div class="bg-gradient-to-br from-red-50 to-red-100 border-l-4 border-red-600 rounded-xl p-6 shadow-lg backdrop-blur-sm mb-8">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-0.5">
+                  <div class="i-tabler-alert-triangle h-7 w-7 text-red-600"></div>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold text-red-900 mb-2">
+                    Produk Ditemukan dalam Daftar Boikot!
+                  </h3>
+                  <p class="text-base text-red-800 leading-relaxed">
+                    Hindari untuk membeli <strong>"{searchResults[0].item.name}"</strong>. Produk ini termasuk dalam kategori <strong>{searchResults[0].item.category}</strong> yang diboikot.
+                  </p>
+                  <div class="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-200 text-red-800 text-xs font-semibold">
+                    <div class="i-tabler-tag h-3.5 w-3.5"></div>
+                    {searchResults[0].item.category}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Main Product Card */}
+            <div class="mb-10">
+              <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <div class="i-tabler-info-circle h-7 w-7 text-red-600"></div>
+                Detail Produk
+              </h2>
+              <div class="max-w-md mx-auto">
+                <Card {...searchResults[0].item} />
+              </div>
+            </div>
+
+            {/* Related Products Section */}
+            {relatedItems.length > 1 && (
+              <div class="mt-12 bg-gray-50 rounded-2xl p-8">
+                <header class="mb-6">
+                  <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3 flex items-center gap-3">
+                    <div class="i-tabler-package h-7 w-7 text-gray-700"></div>
+                    Produk Terkait
+                  </h2>
+                  <p class="text-gray-600">
+                    Produk lain dalam kategori <a href=`/getProducts?category=${matchedCategory}` class="text-red-600 hover:text-red-700 font-semibold hover:underline">{matchedCategory}</a>
+                  </p>
+                </header>
+
+                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  {relatedItems.filter((item, index) => index < 4 && item !== searchResults[0].item.name).map(relatedItem => (
+                    <Card name={relatedItem} category={matchedCategory} />
+                  ))}
+                </div>
+              </div>
+            )}
+        </>) :
+        query ? (
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-xl p-6 shadow-lg backdrop-blur-sm">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-0.5">
+                  <div class="i-tabler-circle-check h-7 w-7 text-green-600"></div>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold text-green-900 mb-2">
+                    Produk Tidak Ditemukan
+                  </h3>
+                  <p class="text-base text-green-800 leading-relaxed">
+                    Tidak ditemukan hasil untuk <strong>"{query}"</strong> dalam daftar produk yang diboikot. Namun, tetap bijak dalam memilih produk.
+                  </p>
+                </div>
+              </div>
+            </div>
+        ) : (
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-l-4 border-orange-400 rounded-xl p-6 shadow-lg backdrop-blur-sm">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-0.5">
+                  <div class="i-tabler-alert-circle h-6 w-6 text-orange-600"></div>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-base font-semibold text-gray-900 mb-1">
+                    Informasi Pencarian
+                  </h3>
+                  <p class="text-sm text-gray-700">
+                    Masukkan nama produk atau brand di kolom pencarian di atas untuk memeriksa status boikot.
+                  </p>
+                </div>
+              </div>
+            </div>
+        )
+    }
+</div>
+) : (<>
+<BaseLayout>
+  <div id="search-result" class="container mx-auto max-w-6xl px-4 mt-6">
+    {searchResults.length > 0 ?
+        (<>
+            {/* Warning Alert */}
+            <div class="bg-gradient-to-br from-red-50 to-red-100 border-l-4 border-red-600 rounded-xl p-6 shadow-lg backdrop-blur-sm mb-8">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-0.5">
+                  <div class="i-tabler-alert-triangle h-7 w-7 text-red-600"></div>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold text-red-900 mb-2">
+                    Produk Ditemukan dalam Daftar Boikot!
+                  </h3>
+                  <p class="text-base text-red-800 leading-relaxed">
+                    Hindari untuk membeli <strong>"{searchResults[0].item.name}"</strong>. Produk ini termasuk dalam kategori <strong>{searchResults[0].item.category}</strong> yang diboikot.
+                  </p>
+                  <div class="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-200 text-red-800 text-xs font-semibold">
+                    <div class="i-tabler-tag h-3.5 w-3.5"></div>
+                    {searchResults[0].item.category}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Main Product Card */}
+            <div class="mb-10">
+              <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                <div class="i-tabler-info-circle h-7 w-7 text-red-600"></div>
+                Detail Produk
+              </h2>
+              <div class="max-w-md mx-auto">
+                <Card {...searchResults[0].item} />
+              </div>
+            </div>
+
+            {/* Related Products Section */}
+            {relatedItems.length > 1 && (
+              <div class="mt-12 bg-gray-50 rounded-2xl p-8">
+                <header class="mb-6">
+                  <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3 flex items-center gap-3">
+                    <div class="i-tabler-package h-7 w-7 text-gray-700"></div>
+                    Produk Terkait
+                  </h2>
+                  <p class="text-gray-600">
+                    Produk lain dalam kategori <a href=`${Astro.url.origin}/getProducts?category=${matchedCategory}` class="text-red-600 hover:text-red-700 font-semibold hover:underline">{matchedCategory}</a>
+                  </p>
+                </header>
+
+                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  {relatedItems.filter((item, index) => index < 4 && item !== searchResults[0].item.name).map(relatedItem => (
+                    <Card name={relatedItem} category={matchedCategory} />
+                  ))}
+                </div>
+              </div>
+            )}
+        </>) :
+        query ? (
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-xl p-6 shadow-lg backdrop-blur-sm">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-0.5">
+                  <div class="i-tabler-circle-check h-7 w-7 text-green-600"></div>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold text-green-900 mb-2">
+                    Produk Tidak Ditemukan
+                  </h3>
+                  <p class="text-base text-green-800 leading-relaxed">
+                    Tidak ditemukan hasil untuk <strong>"{query}"</strong> dalam daftar produk yang diboikot. Namun, tetap bijak dalam memilih produk.
+                  </p>
+                </div>
+              </div>
+            </div>
+        ) : (
+            <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-l-4 border-orange-400 rounded-xl p-6 shadow-lg backdrop-blur-sm">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 mt-0.5">
+                  <div class="i-tabler-alert-circle h-6 w-6 text-orange-600"></div>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-base font-semibold text-gray-900 mb-1">
+                    Informasi Pencarian
+                  </h3>
+                  <p class="text-sm text-gray-700">
+                    Masukkan nama produk atau brand di kolom pencarian di atas untuk memeriksa status boikot.
+                  </p>
+                </div>
+              </div>
+            </div>
+        )
+    }
+  </div>
+</BaseLayout>
+</>
+)}
